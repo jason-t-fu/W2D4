@@ -33,6 +33,22 @@ def largest_contiguous_subsum2(list) # O(n)
     global_sum
 end
 
+def largest_contiguous_subsum3(list) # O(n)
+    return 0 if list.empty?
+
+    curr_sum = list.shift
+    global_sum = curr_sum
+    list.each_with_index do |num, i|
+        if curr_sum + num > num
+            curr_sum += num
+        else
+            curr_sum = largest_contiguous_subsum3(list[i..-1])
+            break
+        end
+    end
+    [curr_sum, global_sum].max
+end
+
 list = [ 0, 3, 5, 4, -5, 10, 1, 90 ]
 p my_min1(list) 
 p my_min2(list)
@@ -47,3 +63,12 @@ list = [2, 3, -6, 7, -6, 7]
 p largest_contiguous_subsum2(list)
 list = [-5, -1, -3]
 p largest_contiguous_subsum2(list)
+
+
+list = [5, 3, -7]
+p largest_contiguous_subsum3(list)
+
+list = [2, 3, -6, 7, -6, 7]
+p largest_contiguous_subsum3(list)
+list = [-5, -1, -3]
+p largest_contiguous_subsum3(list)
